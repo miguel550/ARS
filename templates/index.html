@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <form method="post" action="/create_file" id="form">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <th>Cedula</th>
+                                    <th>Monto</th>
+                                </thead>
+                                <tbody>
+                                    <tr id="id0">
+                                        <td><input type="number" class="input-group"></td>
+                                        <td><input type="number" class="input-group"></td>
+                                    </tr>
+                                    <tr id="id1">
+                                        <td><input type="number" class="input-group"></td>
+                                        <td><input type="number" class="input-group"></td>
+                                    </tr>
+                                </tbody>
+        </table>
+        <button type="submit">Enviar</button>
+    </form>
+    <script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+    <script>
+    function enviar(data){
+            $.ajax({
+                type : "POST",
+                url : "/create_file",
+                data: JSON.stringify(data, null, '\t'),
+                contentType: 'application/json;charset=UTF-8',
+                success: function(result) {
+                    console.log(result);
+                }
+            });
+    }
+    $('#form').on('submit', function(event){
+        event.preventDefault();
+        var j = [];
+        for(var i = 0; i < 2;i++){
+            var row = document.getElementById("id" + i.toString());
+            var cedula = row.children[1].children[0].value;
+            var monto = row.children[1].children[0].value;
+            j.push({cedula:cedula, monto:monto});
+
+        }
+        console.log(j);
+        enviar(j);
+    });
+    </script>
+</body>
+</html>
